@@ -64,7 +64,7 @@ function Player() {
     }, [volume]);
 
     return (
-        <div className="h-20 bg-gradient-to-br from-black to-gray-900 text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-8">
+        <div className="h-20 bg-gradient-to-br from-black to-gray-900 text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-5">
             {/* Left */}
             <div className="flex items-center space-x-4">
                 <img className="image hidden md:inline"src={songInfo?.album.images?.[0]?.url} alt="" />
