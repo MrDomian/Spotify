@@ -50,18 +50,19 @@ function Player() {
         }
     }, [currentTrackIdState, spotifyApi, session]);
 
-    const debouncedAdjustVolume = useCallback(
-        debounce((volume) => {
-            spotifyApi.setVolume(volume).catch((err) => {});
-        }, 500),
-        []
-    );
+    // Nie działa pasek głośności
+    // const debouncedAdjustVolume = useCallback(
+    //     debounce((volume) => {
+    //         spotifyApi.setVolume(volume).catch((err) => {});
+    //     }, 500),
+    //     []
+    // );
 
-    useEffect(() => {
-        if (volume > 0 && volume < 100) {
-            debouncedAdjustVolume;
-        }
-    }, [volume]);
+    // useEffect(() => {
+    //     if (volume > 0 && volume < 100) {
+    //         debouncedAdjustVolume;
+    //     }
+    // }, [volume]);
 
     return (
         <div className="h-20 bg-gradient-to-br from-black to-gray-900 text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-5">
