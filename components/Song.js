@@ -20,7 +20,7 @@ function Song({order, track}) {
         <div className="grid grid-cols-2 text-gray-500 py-2 px-5 hover:bg-gray-900 rounded-lg cursor-pointer"
         onClick={playSong}>
             <div className="flex items-center space-x-4">
-                <p className="w-6 text-right">{order + 1}.</p>
+                <p className="w-6 text-right bold">{order + 1}.</p>
                 <img 
                 className="h-10 w-10"
                 src={track.track.album.images[0].url}
