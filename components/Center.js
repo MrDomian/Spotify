@@ -59,8 +59,8 @@ function Center() {
                 src={playlist?.images?.[0]?.url}
                 alt="" />
                 <div>
-                    <h2 className="md:text-xl xl:text-2xl">PLAYLISTA</h2>
-                    <h1 className="text-2xl md:text-3xl xl:text-6xl font-bold">{playlist?.name}</h1>
+                    <h2 className="md:text-l xl:text-xl">PLAYLISTA</h2>
+                    <h1 className="text-2xl md:text-3xl xl:text-7xl font-bold">{playlist?.name}</h1>
                 </div>
             </section>
             <div>
