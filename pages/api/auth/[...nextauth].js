@@ -13,7 +13,7 @@ async function refreshAccessToken(token) {
         return {
             ...token,
             accessToken: refreshedToken.access_token,
-            accessTokenExpires: Date.now + refreshedToken.expires_in * 1000,
+            accessTokenExpires: Date.now() + refreshedToken.expires_in * 1000,
 
             refreshToken: refreshedToken.refresh_token ?? token.refreshToken,
             // Wymieniam jeśli wrócił nowy token, w przeciwnym razie wracam do starego tokena
@@ -24,7 +24,7 @@ async function refreshAccessToken(token) {
 
         return {
             ...token,
-            error: 'RefreshAccestTokenError',
+            error: 'RefreshAccessTokenError',
         };
     }
 }
@@ -33,7 +33,7 @@ export default NextAuth({
   providers: [
     SpotifyProvider({
       clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
-      clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET || process.env.NEXT_PUBLIC_CLIENT_SECRET,
       authorization: LOGIN_URL,
     }),
   ],
@@ -69,6 +69,7 @@ export default NextAuth({
             session.user.accessToken = token.accessToken;
             session.user.refreshToken = token.refreshToken;
             session.user.username = token.username;
+            session.error = token.error;
 
             return session;
         }
