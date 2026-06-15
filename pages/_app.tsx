@@ -7,9 +7,11 @@ import SpotifyPlayerProvider from "../components/SpotifyPlayerProvider";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <RecoilRoot>
-        <SpotifyPlayerProvider />
-        <Component {...pageProps} />
+      <RecoilRoot override={false}>
+        <>
+          <SpotifyPlayerProvider />
+          <Component {...pageProps} />
+        </>
       </RecoilRoot>
     </SessionProvider>
   );
