@@ -1,18 +1,21 @@
+import { resolveNextAuthUrl } from "../../../lib/authUrl";
+
 export default function handler(req, res) {
     const clientSecret =
         process.env.SPOTIFY_CLIENT_SECRET ||
         process.env.NEXT_PUBLIC_CLIENT_SECRET;
 
     const authSecret = process.env.JWT_SECRET || process.env.NEXTAUTH_SECRET;
-    const nextAuthUrl =
-        process.env.NEXTAUTH_URL ||
-        (process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
-            : null);
-
+    const nextAuthUrl = resolveNextAuthUrl();
+    const configuredUrl = process.env.NEXTAUTH_URL?.replace(/\/$/, "");
     const callbackUrl = nextAuthUrl
         ? `${nextAuthUrl}/api/auth/callback/spotify`
         : null;
+
+    const usingWrongPreviewUrl =
+        Boolean(configuredUrl) &&
+        Boolean(process.env.VERCEL_PROJECT_PRODUCTION_URL) &&
+        configuredUrl !== nextAuthUrl;
 
     res.status(200).json({
         ok: Boolean(
@@ -25,8 +28,12 @@ export default function handler(req, res) {
         hasClientSecret: Boolean(clientSecret),
         hasAuthSecret: Boolean(authSecret),
         hasNextAuthUrl: Boolean(nextAuthUrl),
+        configuredNextAuthUrl: configuredUrl ?? null,
         nextAuthUrl,
         callbackUrl,
-        hint: "Dodaj callbackUrl dokładnie w Spotify Dashboard → Redirect URIs",
+        usingWrongPreviewUrl,
+        hint: usingWrongPreviewUrl
+            ? "NEXTAUTH_URL w Vercel wskazuje na preview — ustaw https://spotify4fun.vercel.app"
+            : "Dodaj callbackUrl dokładnie w Spotify Dashboard → Redirect URIs",
     });
 }

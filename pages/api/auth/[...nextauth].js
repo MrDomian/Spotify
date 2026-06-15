@@ -1,6 +1,12 @@
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
+import { resolveNextAuthUrl } from "../../../lib/authUrl";
 import spotifyApi, { SPOTIFY_SCOPES } from "../../../lib/spotify";
+
+const nextAuthUrl = resolveNextAuthUrl();
+if (nextAuthUrl) {
+    process.env.NEXTAUTH_URL = nextAuthUrl;
+}
 
 const authSecret = process.env.JWT_SECRET || process.env.NEXTAUTH_SECRET;
 const useSecureCookies =
