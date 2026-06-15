@@ -3,6 +3,9 @@ import SpotifyProvider from "next-auth/providers/spotify";
 import spotifyApi, { SPOTIFY_SCOPES } from "../../../lib/spotify";
 
 const authSecret = process.env.JWT_SECRET || process.env.NEXTAUTH_SECRET;
+const useSecureCookies =
+    process.env.NEXTAUTH_URL?.startsWith("https://") ??
+    process.env.VERCEL === "1";
 
 async function refreshAccessToken(token) {
     try {
@@ -30,6 +33,8 @@ async function refreshAccessToken(token) {
 export default NextAuth({
     trustHost: true,
     secret: authSecret,
+    useSecureCookies,
+    debug: process.env.NEXTAUTH_DEBUG === "true",
     providers: [
         SpotifyProvider({
             clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
